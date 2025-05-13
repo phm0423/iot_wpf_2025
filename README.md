@@ -153,16 +153,20 @@ IoT 개발자 WPF 학습리포지토리 2025
 - 종류
     - `Prism`: MS계열에서 직접 개발. 대규모 앱 개발 시 사용. 모듈화 잘되어 있음. 커뮤니티 활발
         - 진입장벽 높음
-    - **Caliburn.Micro**: 경량화된 프레임워크. 쉽게 개발할 수 있음. Xaml 바인딩 생략가능. 커뮤니티 주는추세
+    - `Caliburn.Micro`: 경량화된 프레임워크. 쉽게 개발할 수 있음. Xaml 바인딩 생략가능. 커뮤니티 주는추세
         - [공식사이트](https://caliburnmicro.com/)
         - [Github](https://github.com/Caliburn-Micro/Caliburn.Micro)
         - MahApps.Metro에서 사용 중
         - 디버깅이 어려움. 
+        - [문제]MahApps.Metro의 메시지박스 다이얼로그가 구현이 안됨!!
+
     - `MVVM Light Toolkit`: 가장 가벼운 MVVM 입문용. 쉬운 Command 지원. 개발종료.
         - 확장성이 떨어짐
-    - CommunityToolkit.Mvvm: MS 공식 경량MVVM. 단순, 빠름. 커뮤니티 매우 활발
+    - **CommunityToolkit.Mvvm**: MS 공식 경량MVVM. 단순, 빠름. 커뮤니티 매우 활발
+        - NotifyPropertyChanged를 사용할 필요없음
         - 모듈기능이 없음
-    - `ReactiveUI`: Rx기반 MVVM. 비동기, 스트림처리 강력. 커뮤니티가 활발.
+
+    - `ReactiveUI`: 최신기술 Rx기반 MVVM. 비동기, 스트림처리 강력. 커뮤니티가 활발.
         - 진입장벽이 높음
 
 ### Caliburn.Micro 학습
@@ -183,13 +187,103 @@ IoT 개발자 WPF 학습리포지토리 2025
 ### Caliburn.Micro MVVM 연습
 1. WPF 프로젝트 생성 - [소스](./day02/Day02Wpf/WpfBasicApp02/ViewModels/MainViewModel.cs)
 2. 필요 라이브러리 설치
-    - MySQL.Data
+    - Caliburn.Micro
     - MahApps.Metro
     - MahApps.Metro.IconPacks
-    - Caliburn.Micro
+    - MySQL.Data
 3. Models, Views, ViewModels로 폴더 생성
 4. 이전작업 소스코드 복사, 네임스페이스 변경
 
     <img src="./image/wpf0007.png" width="600">
 
 ## 3일차(05.12)
+
+### CommunityToolkit.Mvvm 다시
+1. Wpf프로젝트 생성
+2. 필요 라이브러리 설치
+    - CommunityToolkit.Mvvm
+    - MahApps.Metro
+    - MahApps.Metro.IconPacks
+3. Models, View, ViewModels 폴더 생성
+4. MainWindow.xaml 삭제
+5. App.xaml StartupUri 도 삭제
+6. Views/MainView.xaml 생성
+7. ViewModels/MainViewModel.cs 생성
+8. App.xaml Startup 이벤트 추가
+    - App.xaml.cs 로직 추가
+9. App.xaml MahApps.Metro 관련 리소스 추가
+10. MainView에 MetroWindow로 변경
+
+    <img src="./image/wpf0008.png" width="600">
+
+### Log 라이브러리
+- 개발한 앱, 솔루션의 현재상태를 계속 모니터링하는 기능
+- Log 사용법
+    - 직접 코딩 방식
+    - 로그 라이브러리 사용방식
+- Log 라이브러리
+    - **NLog**: 가볍고 쉽다. 빠름
+    - Serilog: 어려운 편. 빠름
+    - Log4net: Java의 로그를 .NET으로 이전. 느림
+    - Zlogger: 제일 최신(2021), 초고속게임서버
+
+### NLog 라이브러리 사용
+1. NuGet패키지 > NLog, Nlog.Schema 설치
+2. 새항목 > XML파일 > NLog.config 수정
+3. Info < `Debug` < Warn < Error < Fatal
+4. `NLog.config`를 출력 디렉토리로 복사
+5. Debug, Trace는 출력이 안됨
+6. Info, Warn, Error, Fatal 을 사용
+
+    <img src="./image/wpf0009.png" width="600">
+
+### DB연결 CRUD 연습
+1. WPF프로젝트 생성
+2. NuGet 패키지 필요라이브러리 설치
+    - CommunityToolkit.Mvvm
+    - MahApps.Metro / MahApps.Metro.IconPacks
+    - MySql.Data
+    - NLog
+3. Models, Views, ViewModels 생성
+4. App.xaml 초기화 작업
+5. MainView.xaml, MainViewModel 메인화면 MVVM 작업
+    - 메뉴작업
+    - ContentControl 추가
+6. 하위 사용자컨트롤 작업
+    - BookGenre(View, ViewModel)
+    - Books(View, ViewModel)
+7. Models > Genre(DivisionTbl) 모델 작업
+8. BookGenreViewModel DB처리 구현
+
+    https://github.com/user-attachments/assets/f74861e5-afb1-4d21-ae14-855b08d41608
+
+
+## 4일차
+
+### DB연결 CRUD 연습(계속)
+1. BookGenre에서 INSERT, UPDATE 기능 구현
+2. NLog.config 생성
+3. Helpers.Common 클래스 생성
+    - NLog 인스턴스 생성
+    - 공통 DB연결문자열 생
+    - MahApps.Metro 다이얼로그 코디네이터 생성
+4. 각 ViewModel에 IDialogCoordinator 관련 코딩 추가
+    - ViewModel 생성자에 파라미터 추가
+    - View, ViewModel 연동시 IDialogCoordinator 연결
+5. View에 Dialog 관련 네임스페이스, 속성 추가
+6. await this.dialogCoordinator.ShowMessageAsync() 사용
+
+    <img src="./image/wpf0011.png" width="650">
+
+7. BookView.xaml 화면작업
+8. MemberView.xaml, RentalView.xaml 화면작업
+9. ViewModel들 작업
+
+#### DB연결 CRUD 연습시 추가 필요사항
+- [x] 여러번 나오는 로직 메서드화
+- [x] NLog로 각 기능 동작시 로그남기기. 공통화작업
+- [x] 연결문자열 Common으로 이전
+- [x] 종료 메뉴 다이얼로그 MetroUI로 변경 
+- [x] DB쿼리 모델로 이전
+- [ ] MahApps.Metro 메시지형태로 변경
+- [x] 삭제여부 메시지박스 추가
