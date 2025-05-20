@@ -1,6 +1,6 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
-using WpfMqttSubApp.VieModels;
+using WpfMqttSubApp.ViewModels;
 using WpfMqttSubApp.Views;
 
 namespace WpfMqttSubApp;

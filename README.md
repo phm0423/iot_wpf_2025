@@ -471,6 +471,7 @@ IoT 개발자 WPF 학습리포지토리 2025
 #### 네트워크 확인
 - telnet 명령어로 서버서비스가 동작중인지 확인
 - telnet 아이피주소 포트번호
+
     ```shell
     # MySQL에 접속가능한지 여부
     > telnet 127.0.0.1 3306
@@ -487,3 +488,23 @@ IoT 개발자 WPF 학습리포지토리 2025
     - MahApps.Metro.IconPacks
     - Newtonsoft.Json
     - MQTTnet
+    - MySql.Data
+
+4. DB서버에 접속자 정보확인 쿼리
+    ```sql
+    SELECT * FROM information_schema.processlist LIMIT 10; -- 데이터가 10건이상이면 LIMIT10 이상은 삭제
+    ```
+
+5. WPF MVVM 전체 구현
+6. MqttPub.py와 Publish된 IoT데이터 WPF Subscribe 예제
+
+    https://github.com/user-attachments/assets/984a7813-8213-493a-ba26-77598c896fd9
+
+
+## 10일차
+
+### 스마트홈 연동 모니터링앱 (계속)
+
+#### 스마트홈 기기 실제 IoT센서데이터 모니터링앱
+
+#### 스마트홈 WPF 실시간 시각화
